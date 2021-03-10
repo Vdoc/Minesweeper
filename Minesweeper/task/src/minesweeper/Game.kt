@@ -12,9 +12,21 @@ class Game {
 
     fun start() {
         print("How many mines do you want on the field? ")
-        field.generateMines(takeAnAnswer().toInt())
+        field.generateMines(receivedAnswer().toInt())
+        println()
+
         field.printField()
+        while (!field.isGameOver) {
+            do {
+                print("Set/delete mines marks (x and y coordinates): ")
+            } while (!field.check(receivedAnswer()))
+            println()
+
+            field.checkWin()
+            field.printField()
+        }
+        field.congrats()
     }
 
-    private fun takeAnAnswer(answer: String = scanner.next()): String = answer
+    private fun receivedAnswer(answer: String = scanner.nextLine()): String = answer
 }
