@@ -61,23 +61,23 @@ class Matrix {
 
     fun printField() {
         var output =    " │123456789│\n" +
-                        "—│—————————│\n"
+                "—│—————————│\n"
         for (_Y in 0 until y) {
             output += "${_Y + 1}│"
             for (_X in 0 until x) {
                 output += when (getElenent(_Y, _X)) {
                     -1 -> if (isGameOver) "X"   // если ты это видишь, то ты проиграл
-                          else "."              // , а пока она не видна
+                    else "."              // если не проиграл, то пока мина не видна
                     -2, 10 -> "*"               // маркер на мине или на пустом поле
                     in 1..8 -> if (isFog(_Y, _X)) "."       // пока поле в тумане цифры не видны
-                          else getElenent(_Y, _X).toString()// если тумана нет - пишем количество мин вокруг
+                    else getElenent(_Y, _X).toString()// если тумана нет - пишем количество мин вокруг
                     in 11..18 -> if (isFog(_Y, _X)) "*" // метка на поле с цифрой если туман есть
-                          else {                        // если тумана нет (если такое возможно), то
-                              setElement(_Y, _X, getElenent(_Y, _X) - 10)// снимаем метку и
-                              getElenent(_Y, _X).toString()                     // рисуем цифру
-                          }
+                    else {                        // если тумана нет (если такое возможно), то
+                        setElement(_Y, _X, getElenent(_Y, _X) - 10)// снимаем метку и
+                        getElenent(_Y, _X).toString()                     // рисуем цифру
+                    }
                     else -> if (isFog(_Y, _X)) "."  // обычное поле с туманом
-                          else "/"                  // поле без тумана
+                    else "/"                  // поле без тумана
                 }
             }
             output += "│\n"
@@ -93,7 +93,7 @@ class Matrix {
         val _X: Int = answer[0].toInt() - 1
         val _Y: Int = answer[1].toInt() - 1
         var whatToDo = if (answer.size < 3) "free"  // дефолтное значение для ручного тестирования
-                       else answer[2]
+        else answer[2]
         when(whatToDo) {
             "mine" -> markMine(_Y, _X)
             "free" -> freeField(_Y, _X)
@@ -111,7 +111,7 @@ class Matrix {
         when (element) {
             -1 -> setElement(_Y, _X, -2)    // пометить мину
             -2 -> setElement(_Y, _X, -1)    // снять метку с мины
-             0 -> setElement(_Y, _X, 10)    // поставить метку на пустое мето
+            0 -> setElement(_Y, _X, 10)    // поставить метку на пустое мето
             10 -> setElement(_Y, _X, 0)     // снять метку с пустого места
             in 1..8 -> setElement(_Y, _X, element + 10) // метка на цифре
             else    -> setElement(_Y, _X, element - 10) // снять с цифры метку
